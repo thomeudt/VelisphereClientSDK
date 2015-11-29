@@ -2,8 +2,8 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>This file contains Velisphere authentication information. Do not overwrite!</comment>
-<entry key="Secret Key">...</entry>
+<entry key="Secret Key">empty</entry>
 <entry key="Provisioned">false</entry>
-<entry key="Endpoint Class ID">...</entry>
-<entry key="Endpoint ID">...</entry>
+<entry key="Endpoint Class ID">empty</entry>
+<entry key="Endpoint ID">empty</entry>
 </properties>
