@@ -127,9 +127,9 @@ public class AmqpClient implements Runnable {
 
 					System.out
 							.println(" [IN] Got new inbound message. Content: "
-									+ hMACandPayload);
+									+ hMACandPayload[1]);
 
-					eventInitiator.newInboundMessage(hMACandPayload);
+					eventInitiator.newInboundMessage(hMACandPayload[1]);
 
 				}
 

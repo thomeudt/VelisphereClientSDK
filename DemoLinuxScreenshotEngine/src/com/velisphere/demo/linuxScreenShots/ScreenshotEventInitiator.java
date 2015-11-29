@@ -27,7 +27,7 @@ public class ScreenshotEventInitiator implements EventInitiator {
 		}
 
 		@Override
-		public void newInboundMessage(String[] message) {
+		public void newInboundMessage(String message) {
 			// TODO Auto-generated method stub
 			System.out.println(" [IN] New Inbound Message");
 

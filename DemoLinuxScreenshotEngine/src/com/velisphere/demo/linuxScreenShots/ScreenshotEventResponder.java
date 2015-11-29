@@ -37,7 +37,7 @@ public class ScreenshotEventResponder implements EventListener {
 
 
 	@Override
-	public void newInboundMessage(String[] message) {
+	public void newInboundMessage(String message) {
 		// TODO Auto-generated method stub
 
 	}
