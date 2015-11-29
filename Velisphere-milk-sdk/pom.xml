@@ -1,0 +1,109 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.velisphere.milk</groupId>
+  <artifactId>velisphere-milk-sdk</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>VeliSphere MILK SDK</name>
+  <description>SDK for VeliSphere Client Developers</description>
+  
+  <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+        <version.jdk>1.7</version.jdk>  <!-- 1.7 for JDK 7 -->
+        <version.mvn.compiler>3.2</version.mvn.compiler>
+        <version.mvn.war.plugin>2.6</version.mvn.war.plugin>
+        <version.jersey>2.15</version.jersey>
+        <version.servlet.api>3.0.1</version.servlet.api>  <!-- use 3.0.1 for Tomcat 7 or Java EE 6 (i.e. Glassfish 3.x) -->
+        
+    </properties>
+ 
+   
+  <dependencies>
+  
+        <!-- Jersey -->       
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet</artifactId>
+            <version>${version.jersey}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>${version.jersey}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-processing</artifactId>
+            <version>${version.jersey}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>${version.jersey}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-sse</artifactId>
+            <version>${version.jersey}</version>
+        </dependency>
+    
+  	<dependency>
+  		<groupId>com.rabbitmq</groupId>
+  		<artifactId>amqp-client</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.fasterxml.jackson.core</groupId>
+  		<artifactId>jackson-databind</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.fasterxml.jackson.core</groupId>
+  		<artifactId>jackson-core</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.fasterxml.jackson.core</groupId>
+  		<artifactId>jackson-annotations</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>commons-codec</groupId>
+  		<artifactId>commons-codec</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>javax.ws.rs</groupId>
+  		<artifactId>javax.ws.rs-api</artifactId>
+  	</dependency>
+  </dependencies>
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+  			<groupId>com.rabbitmq</groupId>
+  			<artifactId>amqp-client</artifactId>
+  			<version>3.5.4</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>com.fasterxml.jackson.core</groupId>
+  			<artifactId>jackson-databind</artifactId>
+  			<version>2.6.1</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>com.fasterxml.jackson.core</groupId>
+  			<artifactId>jackson-core</artifactId>
+  			<version>2.6.1</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>com.fasterxml.jackson.core</groupId>
+  			<artifactId>jackson-annotations</artifactId>
+  			<version>2.6.1</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>commons-codec</groupId>
+  			<artifactId>commons-codec</artifactId>
+  			<version>1.10</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>javax.ws.rs</groupId>
+  			<artifactId>javax.ws.rs-api</artifactId>
+  			<version>2.0.1</version>
+  		</dependency>
+  	</dependencies>
+  </dependencyManagement>
+</project>

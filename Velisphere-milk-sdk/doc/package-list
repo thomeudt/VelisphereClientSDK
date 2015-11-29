@@ -1,0 +1,6 @@
+com.velisphere.milk.amqpClient
+com.velisphere.milk.configuration
+com.velisphere.milk.interfaces
+com.velisphere.milk.messageUtils
+com.velisphere.milk.restClient
+com.velisphere.milk.security
