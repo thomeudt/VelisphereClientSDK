@@ -10,11 +10,12 @@ public class LinuxScreenshots {
 
 	public static void main(String[] args) throws IOException  {
 	
-		System.out.println(" ------------------------------------------------------------------");
+		System.out.println(" ----------------------------------------------------------------------------------------------");
 		System.out.println(" VELISPHERE DEMO: SCREENSHOT ENGINE");
 		System.out.println(" (C) 2015 Thorsten Meudt");	
-		System.out.println(" Licensed under the MIT license, http://opensource.org/licenses/MIT");	
-		System.out.println(" ------------------------------------------------------------------");
+		System.out.println(" Licensed under the GPLv2 license, http://www.gnu.org/licenses/old-licenses/gpl-2.0.de.html");
+		System.out.println(" Learn more about the VeliSphere IoT System at www.connectedthingslab.com");
+		System.out.println(" ----------------------------------------------------------------------------------------------");
 		System.out.println(" ");	
 		
 		// Load Configuration Data

@@ -124,14 +124,12 @@ public class AmqpClient implements Runnable {
 					if (msgIsAliveRequest.equals("1"))
 						eventInitiator.requestIsAlive();
 
-					String displayMessage = MessageFabrik.extractProperty(
-							hMACandPayload[1], "PR9");
 
 					System.out
 							.println(" [IN] Got new inbound message. Content: "
-									+ displayMessage);
+									+ hMACandPayload);
 
-					eventInitiator.newInboundMessage(displayMessage);
+					eventInitiator.newInboundMessage(hMACandPayload);
 
 				}
 
@@ -236,7 +234,6 @@ public class AmqpClient implements Runnable {
 		channel.basicPublish("", "controller", props,
 				submittableJSON.getBytes());
 
-		// System.out.println(" [x] Sent '" + messagePackText + "'");
 
 		channel.close();
 		connection.close();

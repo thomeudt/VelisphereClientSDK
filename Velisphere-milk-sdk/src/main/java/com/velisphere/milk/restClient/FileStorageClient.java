@@ -24,111 +24,112 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 
 import com.velisphere.milk.configuration.ConfigData;
-import com.velisphere.milk.messageUtils.MessageFabrik;
 import com.velisphere.milk.security.HashTool;
 
 public class FileStorageClient {
-	
+
 	public static String uploadFile(String localPath, String fileType) {
-		
+
 		String uploadID = "";
-		
+
 		// disable certificate matching check
 
-				javax.net.ssl.HttpsURLConnection
-						.setDefaultHostnameVerifier(new javax.net.ssl.HostnameVerifier() {
+		javax.net.ssl.HttpsURLConnection
+				.setDefaultHostnameVerifier(new javax.net.ssl.HostnameVerifier() {
 
-							@Override
-							public boolean verify(String hostname, SSLSession session) {
-								// TODO Auto-generated method stub
-								return true;
-							}
-
-						});
-
-				// Create a trust manager that does not validate certificate chains
-				TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-					public X509Certificate[] getAcceptedIssuers() {
-						return null;
+					@Override
+					public boolean verify(String hostname, SSLSession session) {
+						// TODO Auto-generated method stub
+						return true;
 					}
 
-					public void checkClientTrusted(X509Certificate[] certs,
-							String authType) {
-					}
+				});
 
-					public void checkServerTrusted(X509Certificate[] certs,
-							String authType) {
-					}
-				} };
+		// Create a trust manager that does not validate certificate chains
+		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+			public X509Certificate[] getAcceptedIssuers() {
+				return null;
+			}
 
-				// Install the all-trusting trust manager
-				SSLContext sc;
-					try {
-						sc = SSLContext.getInstance("TLS");
-						sc.init(null, trustAllCerts, new SecureRandom());
-						HttpsURLConnection
-								.setDefaultSSLSocketFactory(sc.getSocketFactory());
-			
-					
+			public void checkClientTrusted(X509Certificate[] certs,
+					String authType) {
+			}
 
-							
-		
-		
-		
-		// create JAX-RS Client
+			public void checkServerTrusted(X509Certificate[] certs,
+					String authType) {
+			}
+		} };
 
-		Client client = ClientBuilder.newBuilder().sslContext(sc).build();
+		// Install the all-trusting trust manager
+		SSLContext sc;
+		try {
+			sc = SSLContext.getInstance("TLS");
+			sc.init(null, trustAllCerts, new SecureRandom());
+			HttpsURLConnection
+					.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
-		
-		// collect REST Web Service (TOUCAN) address from Blender Configuration Server
-		WebTarget target = client.target( "http://www.connectedthingslab.com:8080/BlenderServer/rest/config/get/general" );
-		Response response = target.path("TOUCAN").request().get();
-		String toucanIP = response.readEntity(String.class);
-		
-		
-		// get endpointID and secret from ConfigData
-		String endpointID = ConfigData.epid;
-		String secret = ConfigData.secret;
-				
-		
-		// Register Multipart Feature for client and instantiate multipart
-		
-		client.register(MultiPartFeature.class);
-	    MultiPart multiPart = new MultiPart();
-	 
-	    
-	    // create file data bodybpart based on file from local file system and add to multipart message
-	    FileDataBodyPart fileDataBodyPart = new FileDataBodyPart("file",
-	            new File(localPath), MediaType.APPLICATION_OCTET_STREAM_TYPE);
-	    multiPart.bodyPart(fileDataBodyPart);
-	    
-	    
-	    // calculate key-hashed message authentication code to attach to message for authentication by VeliSphere
-	    
-		String hMacEndpointID = HashTool.getHmacSha1(endpointID, secret);
+			// create JAX-RS Client
 
-		// add hMAC as formdata plain text multipart to multipart message
-		FormDataBodyPart hMACBodyPart = new FormDataBodyPart("hMAC", hMacEndpointID, MediaType.TEXT_PLAIN_TYPE);
-	    multiPart.bodyPart(hMACBodyPart);
-		
-	    // post to toucan server
-	    final Response res = client.target("https://"+toucanIP+"/rest/files/post/binary/upload").path(fileType).path(endpointID).request().post(Entity.entity(multiPart, MediaType.MULTIPART_FORM_DATA));
-		
-		
-	    // toucan server will provide a response, if things go well, this will be the upload id for further reference, for instance obtaining the file again
-	    uploadID = res.readEntity(String.class);
-		
+			Client client = ClientBuilder.newBuilder().sslContext(sc).build();
+
+			// collect REST Web Service (TOUCAN) address from Blender
+			// Configuration Server
+			WebTarget target = client
+					.target("http://www.connectedthingslab.com:8080/BlenderServer/rest/config/get/general");
+			Response response = target.path("TOUCAN").request().get();
+			String toucanIP = response.readEntity(String.class);
+
+			// get endpointID and secret from ConfigData
+			String endpointID = ConfigData.epid;
+			String secret = ConfigData.secret;
+
+			// Register Multipart Feature for client and instantiate multipart
+
+			client.register(MultiPartFeature.class);
+			MultiPart multiPart = new MultiPart();
+
+			// create file data bodybpart based on file from local file system
+			// and add to multipart message
+			FileDataBodyPart fileDataBodyPart = new FileDataBodyPart("file",
+					new File(localPath),
+					MediaType.APPLICATION_OCTET_STREAM_TYPE);
+			multiPart.bodyPart(fileDataBodyPart);
+
+			// calculate key-hashed message authentication code to attach to
+			// message for authentication by VeliSphere
+
+			String hMacEndpointID = HashTool.getHmacSha1(endpointID, secret);
+
+			// add hMAC as formdata plain text multipart to multipart message
+			FormDataBodyPart hMACBodyPart = new FormDataBodyPart("hMAC",
+					hMacEndpointID, MediaType.TEXT_PLAIN_TYPE);
+			multiPart.bodyPart(hMACBodyPart);
+
+			// post to toucan server
+			final Response res = client
+					.target("https://" + toucanIP
+							+ "/rest/files/post/binary/upload")
+					.path(fileType)
+					.path(endpointID)
+					.request()
+					.post(Entity.entity(multiPart,
+							MediaType.MULTIPART_FORM_DATA));
+
+			// toucan server will provide a response, if things go well, this
+			// will be the upload id for further reference, for instance
+			// obtaining the file again
+			uploadID = res.readEntity(String.class);
+
 		} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (KeyManagementException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}		   
-	    
-		return uploadID;
-				
-	}
-	
-}
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (KeyManagementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+		return uploadID;
+
+	}
+
+}

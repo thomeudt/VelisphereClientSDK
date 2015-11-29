@@ -73,7 +73,7 @@ public class ProvisioningClient {
 			HttpsURLConnection
 					.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
-		// Continue from here;
+			// Continue from here;
 
 			Client client = ClientBuilder.newBuilder().sslContext(sc).build();
 
@@ -182,7 +182,7 @@ public class ProvisioningClient {
 	}
 
 	public static String customProvisioning(String customUniqueIdentifier) {
-		InetAddress ip;
+	
 
 		String identifier = customUniqueIdentifier;
 
@@ -227,8 +227,7 @@ public class ProvisioningClient {
 
 			Client client = ClientBuilder.newBuilder().sslContext(sc).build();
 
-			StringBuilder sb = new StringBuilder();
-
+	
 			System.out
 					.println("[IN] Requesting provisioning server address... ");
 
@@ -237,7 +236,6 @@ public class ProvisioningClient {
 
 			Response response = target.path("TOUCAN").request().get();
 
-			
 			System.out
 					.println("[IN] Request completed, response from server is "
 							+ response);

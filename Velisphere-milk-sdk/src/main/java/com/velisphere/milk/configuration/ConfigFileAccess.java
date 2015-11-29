@@ -21,7 +21,8 @@ public class ConfigFileAccess {
 			File f = new File(System.getProperty("user.dir")
 					+ System.getProperty("file.separator")
 					+ "velisphere_config.xml");
-			System.out.println("[IN] velisphere_config.xml stored at: " + System.getProperty("user.dir"));
+			System.out.println("[IN] velisphere_config.xml stored at: "
+					+ System.getProperty("user.dir"));
 			OutputStream out = new FileOutputStream(f);
 			props.storeToXML(out,
 					"This file contains Velisphere authentication information. Do not overwrite!");
@@ -31,9 +32,9 @@ public class ConfigFileAccess {
 	}
 
 	/**
-	 * Load the preferences
+	 * Load preferences
 	 * 
-	 * @return
+	 *
 	 */
 
 	public static void loadParamChangesAsXML() {
@@ -60,8 +61,9 @@ public class ConfigFileAccess {
 		ConfigData.epid = props.getProperty("Endpoint ID");
 		ConfigData.epcid = props.getProperty("Endpoint Class ID");
 		if (props.getProperty("Provisioned") == "yes")
-			ConfigData.provisioned = true; 
-			else ConfigData.provisioned =false;
+			ConfigData.provisioned = true;
+		else
+			ConfigData.provisioned = false;
 
 	}
 

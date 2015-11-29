@@ -1,6 +1,5 @@
 package com.velisphere.demo.linuxScreenShots;
 
-import com.velisphere.milk.configuration.Provisioner;
 import com.velisphere.milk.restClient.ProvisioningClient;
 
 public class PreDeployment {

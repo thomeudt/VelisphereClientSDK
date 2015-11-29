@@ -1,12 +1,10 @@
 package com.velisphere.demo.linuxScreenShots;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 import com.velisphere.milk.amqpClient.AmqpClient;
 import com.velisphere.milk.configuration.ConfigData;
 import com.velisphere.milk.interfaces.EventListener;
-import com.velisphere.milk.messageUtils.MessageFabrik;
 
 
 
@@ -39,7 +37,7 @@ public class ScreenshotEventResponder implements EventListener {
 
 
 	@Override
-	public void newInboundMessage(String message) {
+	public void newInboundMessage(String[] message) {
 		// TODO Auto-generated method stub
 
 	}

@@ -19,15 +19,10 @@ package com.velisphere.milk.messageUtils;
 
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.util.HashMap;
-
 import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -45,9 +40,7 @@ public class MessageFabrik {
 	{
 	
 		ObjectMapper mapper = new ObjectMapper();
-		
-		System.out.println("Intake: " + object.toString());
-	 
+
 		jsonString = new String();
 		try {
 			jsonString = mapper.writeValueAsString(object);
@@ -56,7 +49,6 @@ public class MessageFabrik {
 			e.printStackTrace();
 		}
 				
-		System.out.println("JSON generiert: " + jsonString);
 				
 	}
 
@@ -94,7 +86,6 @@ public class MessageFabrik {
 	public static String[] parseOuterJSON(String messageBody) throws IOException
 	{
 	
-		System.out.println("Parsing " + messageBody);
 		ObjectMapper mapper = new ObjectMapper();
 		JsonFactory factory = mapper.getFactory();
 		JsonParser jp = factory.createParser(messageBody);

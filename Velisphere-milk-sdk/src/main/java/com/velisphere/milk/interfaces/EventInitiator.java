@@ -10,7 +10,7 @@ public interface EventInitiator {
     public void addListener(EventListener toAdd);
     public void requestIsAlive();
     public void requestAllProperties();    
-    public void newInboundMessage(String message);
+    public void newInboundMessage(String[] message);
 
 	
 }
