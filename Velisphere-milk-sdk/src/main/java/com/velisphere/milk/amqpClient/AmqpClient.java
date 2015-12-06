@@ -26,12 +26,12 @@ import com.velisphere.milk.security.MessageValidator;
 public class AmqpClient implements Runnable {
 
 	private static Thread t;
-	private EventListener eventInitiator;
+	private EventListener eventListener;
 	private volatile static boolean done = false;
 
 
-	public AmqpClient(EventListener eventInitiator) {
-		this.eventInitiator = eventInitiator;
+	public AmqpClient(EventListener eventListener) {
+		this.eventListener = eventListener;
 
 	}
 
@@ -115,16 +115,16 @@ public class AmqpClient implements Runnable {
 							hMACandPayload[1], "getAllProperties");
 
 					if (msgGetAllProperties.equals("1"))
-						eventInitiator.requestAllProperties();
+						eventListener.requestAllProperties(this);
 
 					String msgIsAliveRequest = MessageFabrik.extractProperty(
 							hMACandPayload[1], "getIsAlive");
 
 					if (msgIsAliveRequest.equals("1"))
-						eventInitiator.requestIsAlive();
+						eventListener.requestIsAlive(this);
 
 
-					eventInitiator.newInboundMessage(hMACandPayload[1]);
+					eventListener.newInboundMessage(this, hMACandPayload[1]);
 
 				}
 
@@ -157,7 +157,7 @@ public class AmqpClient implements Runnable {
 
 	}
 
-	public static void sendHashTable(HashMap<String, String> message,
+	public void sendHashTable(HashMap<String, String> message,
 			String queue_name, String type) throws Exception {
 
 		// build password for rabbitmq by hashing secret

@@ -1,4 +1,4 @@
-package com.velisphere.demo.linuxScreenShots;
+package com.velisphere.demo.rpiSensors;
 
 import java.util.HashMap;
 
@@ -9,7 +9,9 @@ import com.velisphere.milk.interfaces.EventListener;
 
 
 
-public class ScreenshotEventListener implements EventListener {
+public class PiEventListener implements EventListener {
+	
+	  
 	
 		@Override
 		public void requestIsAlive(AmqpClient amqpClient) {
@@ -20,7 +22,6 @@ public class ScreenshotEventListener implements EventListener {
 			messageHash.put("setState", "REACHABLE");
 			
 			try {
-				
 				amqpClient.sendHashTable(messageHash, ConfigData.epid, "CTL");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -32,7 +33,7 @@ public class ScreenshotEventListener implements EventListener {
 		@Override
 		public void requestAllProperties(AmqpClient amqpClient) {
 			
-			System.out.println("AllProperties requested and discarded as not supported by VeliFS");
+			System.out.println("AllProperties requested and discarded as not supported by PiSensor");
 			
 		}
 
