@@ -1,9 +1,11 @@
 package com.velisphere.milk.interfaces;
 
+
 public interface EventListener {
 
-	public void isAliveRequested();
-	public void allPropertiesRequested();
-	public void newInboundMessage(String message);
+    public void requestIsAlive();
+    public void requestAllProperties();    
+    public void newInboundMessage(String message);
+
 	
 }

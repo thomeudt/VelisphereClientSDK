@@ -39,15 +39,16 @@ public class LinuxScreenshots {
 
 		// Activate Event Responders
 
-		ScreenshotEventResponder eventResponder = new ScreenshotEventResponder();
 		
-		ScreenshotEventInitiator initiator = new ScreenshotEventInitiator();
+		ScreenshotEventListener eventListener = new ScreenshotEventListener();
 	
-		initiator.addListener(eventResponder);
+		// Start Server and activate listener
 
-		// Start Server
-
-		AmqpClient.startClient(initiator);
+		AmqpClient amqpClient = new AmqpClient(eventListener);
+		
+		amqpClient.startClient();
+		
+		// Start timer to submit screenshots via HTTP
 		
 		Timer timer = new Timer();
 		 timer.schedule(new ScreenShotEngine(), 0, 15000);

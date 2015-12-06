@@ -21,7 +21,7 @@ public class ConfigFileAccess {
 			File f = new File(System.getProperty("user.dir")
 					+ System.getProperty("file.separator")
 					+ "velisphere_config.xml");
-			System.out.println("[IN] velisphere_config.xml stored at: "
+			System.out.println("[IN] velisphere_config.xml stored in: "
 					+ System.getProperty("user.dir"));
 			OutputStream out = new FileOutputStream(f);
 			props.storeToXML(out,

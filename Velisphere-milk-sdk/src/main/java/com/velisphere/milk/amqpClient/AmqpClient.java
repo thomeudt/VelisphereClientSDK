@@ -18,7 +18,7 @@ import com.rabbitmq.client.AMQP.BasicProperties;
 import com.velisphere.milk.configuration.ConfigData;
 import com.velisphere.milk.configuration.ConfigFileAccess;
 import com.velisphere.milk.configuration.ServerParameters;
-import com.velisphere.milk.interfaces.EventInitiator;
+import com.velisphere.milk.interfaces.EventListener;
 import com.velisphere.milk.messageUtils.MessageFabrik;
 import com.velisphere.milk.security.HashTool;
 import com.velisphere.milk.security.MessageValidator;
@@ -26,9 +26,11 @@ import com.velisphere.milk.security.MessageValidator;
 public class AmqpClient implements Runnable {
 
 	private static Thread t;
-	private EventInitiator eventInitiator;
+	private EventListener eventInitiator;
+	private volatile static boolean done = false;
 
-	public AmqpClient(EventInitiator eventInitiator) {
+
+	public AmqpClient(EventListener eventInitiator) {
 		this.eventInitiator = eventInitiator;
 
 	}
@@ -84,7 +86,7 @@ public class AmqpClient implements Runnable {
 
 			System.out.println(" [IN] Client Startup Completed.");
 			System.out
-					.println(" [IN] Waiting for messages. To exit press CTRL+C");
+					.println(" [IN] Waiting for inbound messages. To exit press CTRL+C");
 
 			QueueingConsumer consumer = new QueueingConsumer(channel);
 			channel.basicConsume(QUEUE_NAME, true, consumer);
@@ -92,9 +94,6 @@ public class AmqpClient implements Runnable {
 			while (!Thread.currentThread().isInterrupted()) {
 				QueueingConsumer.Delivery delivery = consumer.nextDelivery();
 				String messageBody = new String(delivery.getBody());
-
-				System.out.println(" [IN] Message JSON:" + messageBody);
-
 				String[] hMACandPayload = new String[2];
 				boolean validationResult = false;
 
@@ -124,10 +123,6 @@ public class AmqpClient implements Runnable {
 					if (msgIsAliveRequest.equals("1"))
 						eventInitiator.requestIsAlive();
 
-
-					System.out
-							.println(" [IN] Got new inbound message. Content: "
-									+ hMACandPayload[1]);
 
 					eventInitiator.newInboundMessage(hMACandPayload[1]);
 
@@ -216,9 +211,9 @@ public class AmqpClient implements Runnable {
 
 		String hMAC = HashTool.getHmacSha1(messagePackJSON, ConfigData.secret);
 
-		System.out.println("Using secret: " + ConfigData.secret);
+		System.out.println(" [IN] Sending message using secret: " + ConfigData.secret);
 
-		System.out.println("Using endpointID: " + ConfigData.epid);
+		System.out.println(" [IN] Sending message using endpointID: " + ConfigData.epid);
 
 		HashMap<String, String> submittableMessage = new HashMap<String, String>();
 
@@ -228,8 +223,8 @@ public class AmqpClient implements Runnable {
 				submittableMessage);
 		String submittableJSON = outerMessageFactory.getJsonString();
 
-		System.out.println("HMAC:" + hMAC);
-		System.out.println("Submittable:" + submittableJSON);
+		System.out.println(" [IN] Adding calculated HMAC: " + hMAC);
+		System.out.println(" [IN] Submitting message to broker: " + submittableJSON);
 
 		channel.basicPublish("", "controller", props,
 				submittableJSON.getBytes());
@@ -239,15 +234,19 @@ public class AmqpClient implements Runnable {
 		connection.close();
 	}
 
-	public static void startClient(EventInitiator eventInitiator) {
+	public void shutdownClient() {
+		    done = true;
+		  }
+	
+	public void startClient() {
 
 		/*
 		 * Show startup message
 		 */
-
+		
 		System.out.println();
 		System.out
-				.println("    * *    VeliSphere SDK Client v0.3 / AMQP (Milk)");
+				.println("    * *    VeliSphere SDK Client v0.3.1 / AMQP (Milk)");
 		System.out
 				.println("    * * *  Copyright (C) 2015 Thorsten Meudt/Connected Things Lab. All rights reserved.");
 		System.out.println("**   *    ");
@@ -269,9 +268,9 @@ public class AmqpClient implements Runnable {
 		System.out.println(" [IN] Endpoint ID: " + ConfigData.epid);
 		System.out.println(" [IN] Secret: " + ConfigData.secret);
 
-		t = new Thread(new AmqpClient(eventInitiator), "listener");
+		t = new Thread(this, "listener");
 		t.start();
 
 	}
-
+	
 }
