@@ -30,11 +30,11 @@ import com.velisphere.milk.configuration.ConfigData;
 
 public class PhidgetMonitoringEngine {
 
-	private String touchSensorID = "60a60d48-3ea8-4f2c-a47c-753ed808db68";
-	private String lightSensorID = "PC3";
-	private String pressureSensorID = "60a60d48-3ea8-4f2c-a47c-753ed808db68";
-	private String dialKnobID = "60a60d48-3ea8-4f2c-a47c-753ed808db68";
-	private String locationID = "PC_GEO_LATLON";
+	private String touchSensorID = "f3b93c91-dee0-4609-ac1c-100dd00e060a";
+	private String lightSensorID = "67f6edfa-3413-41a7-ab16-e9ed72136696";
+	private String pressureSensorID = "72d3bbef-1f8e-4d8c-a838-ea119ef98592";
+	private String dialKnobID = "ac4bd814-3a65-42f8-b5ad-75e71e63640b";
+	private String locationID = "24c1ea6d-c2c5-420d-9743-f718e221e07d";
 	
 	private AmqpClient amqpClient;
 	
