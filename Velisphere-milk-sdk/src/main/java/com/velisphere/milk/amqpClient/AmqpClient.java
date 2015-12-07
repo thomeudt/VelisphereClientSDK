@@ -69,6 +69,10 @@ public class AmqpClient implements Runnable {
 			factory.setVirtualHost("hClients");
 			factory.setPort(5671);
 			factory.useSslProtocol();
+			factory.setRequestedHeartbeat(1);
+			factory.setConnectionTimeout(5000);
+			factory.setAutomaticRecoveryEnabled(true);
+			factory.setTopologyRecoveryEnabled(true);
 
 			Connection connection = null;
 
@@ -139,13 +143,13 @@ public class AmqpClient implements Runnable {
 
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
-			System.out.println(" [ER] Server has shut down. Reason: "
+			System.out.println(" [ER] Client has shut down. Reason: "
 					+ e.getMessage());
 		} catch (IOException | ShutdownSignalException
 				| ConsumerCancelledException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println(" [ER] Server has shut down. Reason: "
+			System.out.println(" [ER] Client has shut down. Reason: "
 					+ e.getMessage());
 		} catch (KeyManagementException e) {
 			// TODO Auto-generated catch block

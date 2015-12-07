@@ -17,6 +17,12 @@ public class BatterySensorMain {
 		System.out.println(" Learn more about the VeliSphere IoT System at www.connectedthingslab.com");
 		System.out.println(" ----------------------------------------------------------------------------------------------");
 		System.out.println(" ");	
+		System.out.println(" This Demo is designed for Ubuntu based systems and tested on Ubuntu 15.10. Older versions might");
+		System.out.println(" still work.");
+		System.out.println(" For the SMART monitoring function to work, smartmontools have to be installed.");
+		System.out.println(" To install smartmontools, execute SUDO APT-GET INSTALL SMARTMONTOOLS");	
+		System.out.println(" ----------------------------------------------------------------------------------------------");
+		
 		
 		// Load Configuration Data
 		
@@ -56,7 +62,7 @@ public class BatterySensorMain {
 		// Start timer to submit battery charge level at defined intervals
 		
 		Timer timer = new Timer();
-		 timer.schedule(new BatterySensorEngine(amqpClient), 0, 15000);
+		 timer.schedule(new BatterySensorEngine(amqpClient), 0, 5000);
 		
 		
 		
